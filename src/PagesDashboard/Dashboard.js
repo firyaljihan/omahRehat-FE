@@ -3,14 +3,15 @@ import Sidebar from '../Components/Sidebar'
 import Header from '../Components/Header';
 import axios from 'axios'
 
+
 export default class Dashboard extends React.Component {
     constructor() {
         super()
         this.state = {
-            user: [],
+            users: [],
             customer: [],
-            typeroom: [],
-            room: [],
+            tipe_kamar: [],
+            kamar: [],
             role: "",
             token: "",
             action: ""
@@ -42,7 +43,7 @@ export default class Dashboard extends React.Component {
             .get(url, this.headerConfig())
             .then((response) => {
                 this.setState({
-                    user: response.data.count,
+                    users: response.data.count,
                 });
             })
             .catch((error) => {
@@ -51,7 +52,7 @@ export default class Dashboard extends React.Component {
     };
 
     getCustomer = () => {
-        let url = "http://localhost:8080/customer/"
+        let url = ""
         axios.get(url)
             .then((response) => {
                 this.setState({
@@ -64,11 +65,11 @@ export default class Dashboard extends React.Component {
     }
 
     getRoom = () => {
-        let url = "http://localhost:8080/room"
+        let url = "http://localhost:8080/kamar"
         axios.get(url)
             .then(response => {
                 this.setState({
-                    room: response.data.count
+                    kamar: response.data.count
                 })
                 console.log(response.data.data)
             })
@@ -78,11 +79,11 @@ export default class Dashboard extends React.Component {
     }
 
     getTypeRoom = () => {
-        let url = "http://localhost:8080/room-type"
+        let url = "http://localhost:8080/tipeKamar"
         axios.get(url)
             .then(response => {
                 this.setState({
-                    typeroom: response.data.count
+                    tipe_kamar: response.data.count
                 })
                 console.log(response.data.data)
             })
@@ -109,35 +110,25 @@ export default class Dashboard extends React.Component {
 
     render() {
         return (
-            <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+            <div class="flex flex-row min-h-screen bg-white text-gray-800">
                 <Sidebar />
                 <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
                     <Header />
-                    <div class="main-content flex flex-col flex-grow p-4">
-                        <div class="flex flex-row h-40">
-                            <div class="w-1/2 text-gray-700 text-center bg-rose-300 px-4 py-2 m-2 rounded-md border-2  border-rose-400 ">
-                                <p class="mt-8 text-xl font-medium">Jumlah User</p>
-                                <p class="text-lg font-bold">{this.state.user}</p>
+                    <div class="main-content flex flex-col flex-grow p-4 z-0 pl-96">
+                        
+                        <div class="flex flex-row h-72 place-content-center">
+                            <div class="w-2/5 text-black-700 text-center bg-[#F1F6F9] px-4 py-2 m-2 rounded-md border-2  border-[#F1F6F9] ">
+                                <p class="mt-24  text-2xl font-bold text-center">Type Room</p>
                             </div>
-                            <div class="w-1/2 text-gray-700 text-center bg-fuchsia-300 px-4 py-2 m-2 rounded-md border-2  border-fuchsia-400 ">
-                                <p class="mt-8 text-xl font-medium">Jumlah Customer</p>
-                                <p class="text-lg font-bold">{this.state.customer}</p>
-                            </div>
-                        </div>
-                        <div class="flex flex-row h-40">
-                            <div class="w-1/2 text-gray-700 text-center bg-sky-300 px-4 py-2 m-2 rounded-md border-2  border-sky-400 ">
-                                <p class="mt-8 text-xl font-medium">Jumlah Room</p>
-                                <p class="text-lg font-bold">{this.state.room}</p>
-                            </div>
-                            <div class="w-1/2 text-gray-700 text-center bg-cyan-300 px-4 py-2 m-2 rounded-md border-2  border-cyan-400 ">
-                                <p class="mt-8 text-xl font-medium">Jumlah Type Room</p>
-                                <p class="text-lg font-bold">{this.state.typeroom}</p>
+                            <div class="w-2/5 text-black-700 text-center bg-[#9BA4B5] px-4 py-2 m-2 rounded-md border-2  border-[#9BA4B5] ">
+                                <p class="mt-24  text-2xl font-bold text-center">User</p>
                             </div>
                         </div>
+                        
                     </div>
                     <footer class="footer px-4 py-2">
                         <div class="footer-content">
-                            <p class="text-sm text-gray-600 text-center">© Brandname 2023. All rights reserved. <a href="https://twitter.com/iaminos">by Erairris</a></p>
+                            <p class="text-sm text-gray-600 text-center">© Brandname 2023. All rights reserved. <a href="https://twitter.com/iaminos">by hantu</a></p>
                         </div>
                     </footer>
                 </main>

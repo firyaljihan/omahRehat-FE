@@ -13,11 +13,11 @@ export default class Rooms extends React.Component {
         this.state = {
             typeroom: [],
             detail: [],
-            id_room_type: "",
-            name_room_type: "",
-            price: "",
-            description: "",
-            photo: "",
+            tipeKamarId: "",
+            nama_tipe_kamar: "",
+            harga: "",
+            deskripsi: "",
+            foto: "",
             keyword: ""
         }
     }
@@ -41,11 +41,11 @@ export default class Rooms extends React.Component {
     handleDetail = (item) => {
         $("#modal_detail").show()
         this.setState({
-            id_room_type: item.id_room_type,
-            name_room_type: item.name_room_type,
-            price: item.price,
-            description: item.description,
-            photo: item.photo
+            id: item.id,
+            nama_tipe_kamar: item.nama_tipe_kamar,
+            harga: item.harga,
+            deskripsi: item.deskripsi,
+            foto: item.foto
 
         })
 
@@ -55,7 +55,7 @@ export default class Rooms extends React.Component {
         let data = {
             keyword: this.state.keyword,
         }
-        let url = "http://localhost:8080/room-type/find/filter"
+        let url = "http://localhost:8080/tipeKamar/findTipeKamar/"
         axios.post(url, data)
             .then(response => {
                 if (response.status === 200) {
@@ -74,7 +74,7 @@ export default class Rooms extends React.Component {
     }
 
     getTypeRoom = () => {
-        let url = "http://localhost:8080/room-type"
+        let url = "http://localhost:8080/tipeKamar/getAllTipeKamar"
         axios.get(url)
             .then(response => {
                 this.setState({
@@ -114,21 +114,21 @@ export default class Rooms extends React.Component {
                     </div>
 
                     <div class="grid grid-cols-4 gap-4 mt-4">
-                        {this.state.typeroom.map((item, index) => (
+                        {this.state.typeroom.map((item) => (
                             <div class="col-span-1">
                                 {/* Card untuk type room */}
                                 <div class="CardEvent">
                                     <div class="max-w-sm rounded overflow-hidden shadow-lg border-2 border-gray-200 bg-gray-100 ">
                                         <div className='container'>
-                                            <img class="w-full h-48" src={"http://localhost:8080/uploads/image/" + item.photo} />
+                                            <img class="w-full h-48" src={"http://localhost:8080/foto/" + item.foto} />
                                         </div>
                                         <div class="px-6 py-4">
-                                            <div class="font-bold text-2xl mb-2">{item.name_room_type}</div>
-                                            <div class="font-bold text-xl mb-2 text-blue-600">{item.price}/night</div>
+                                            <div class="font-bold text-2xl mb-2">{item.nama_tipe_kamar}</div>
+                                            <div class="font-bold text-xl mb-2 text-blue-600">{item.harga}/night</div>
                                             <p class="text-gray-700 text-base">
                                                 <LinesEllipsis
-                                                    text={item.description}
-                                                    maxLine="3"
+                                                    text={item.deskripsi}
+                                                    maxLine="1"
                                                     ellipsis="..."
                                                 />
                                             </p>
@@ -156,7 +156,7 @@ export default class Rooms extends React.Component {
                             {/* <!-- Modal header --> */}
                             <div class="flex items-center justify-between p-5 border-b rounded-t border-gray-500">
                                 <h3 class="p-2 text-xl font-medium text-gray-900 ">
-                                    {this.state.name_room_type}
+                                    {this.state.nama_tipe_kamar} Room
                                 </h3>
                                 <button type="button" class="text-gray-400 bg-transparent hover:bg-red-500 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-gray-600 hover:text-white" data-modal-hide="medium-modal" onClick={() => this.handleClose()}>
                                     <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -167,11 +167,11 @@ export default class Rooms extends React.Component {
                             <div class="p-6">
 
                                 <div className='container'>
-                                    <img class="rounded-md w-200 h-100" src={"http://localhost:8080/uploads/image/" + this.state.photo} />
+                                    <img class="rounded-md w-200 h-100" src={"http://localhost:8080/foto/" + this.state.foto} />
                                 </div>
                                 <div class="px-2 py-4">
-                                    <div class="font-bold text-2xl mb-2">{this.state.name_room_type}</div>
-                                    <div class="font-bold text-xl mb-2 text-blue-600">{this.state.price}/night</div>
+                                    <div class="font-bold text-2xl mb-2">{this.state.nama_tipe_kamar}</div>
+                                    <div class="font-bold text-xl mb-2 text-blue-600">{this.state.harga}/night</div>
                                     <p class="text-black-700 text-base">
                                         {this.state.description}
                                     </p>

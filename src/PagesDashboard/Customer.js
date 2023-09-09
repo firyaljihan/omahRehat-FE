@@ -12,13 +12,12 @@ export default class Customer extends React.Component {
         super();
         this.state = {
             customer: [],
-            id_customer: "",
+            id: "",
+            nama: "",
             nik: "",
-            customer_name: "",
-            address: "",
+            no_hp: "",
             email: "",
             password: "",
-            role: "",
             token: "",
             action: "",
             keyword: ""
@@ -78,10 +77,10 @@ export default class Customer extends React.Component {
     handleAdd = () => {
         $("#modal_customer").show()
         this.setState({
-            id_customer: "",
+            id: "",
+            nama: "",
             nik: "",
-            customer_name: "",
-            address: "",
+            no_hp: "",
             email: "",
             password: "",
             action: "insert"
@@ -91,10 +90,10 @@ export default class Customer extends React.Component {
     handleEdit = (item) => {
         $("#modal_customer").show()
         this.setState({
-            id_customer: item.id_customer,
+            id: item.id,
+            nama: item.nama,
             nik: item.nik,
-            customer_name: item.customer_name,
-            address: item.address,
+            no_hp: item.no_hp,
             email: item.email,
             password: item.password,
             action: "update"
@@ -105,16 +104,16 @@ export default class Customer extends React.Component {
         e.preventDefault()
 
         let form = {
-            id_customer: this.state.id_customer,
+            id: this.state.id,
+            nama: this.state.nama,
             nik: this.state.nik,
-            customer_name: this.state.customer_name,
-            address: this.state.address,
+            no_hp: this.state.no_hp,
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
         }
 
         if (this.state.action === "insert") {
-            let url = "http://localhost:8080/customer/register"
+            let url = "http://localhost:8080/customer/addCust"
             axios.post(url, form)
                 .then(response => {
                     this.getCustomer()
@@ -128,7 +127,7 @@ export default class Customer extends React.Component {
                     }
                 })
         } else {
-            let url = "http://localhost:8080/customer/update/" + this.state.id_customer
+            let url = "http://localhost:8080/customer/update/" + this.state.id
             axios.put(url, form, this.headerConfig())
                 .then(response => {
                     this.getCustomer()
@@ -159,7 +158,7 @@ export default class Customer extends React.Component {
     }
 
     getCustomer = () => {
-        let url = "http://localhost:8080/customer/"
+        let url = "http://localhost:8080/customer/getAllCust"
         axios.get(url)
             .then((response) => {
                 this.setState({
@@ -186,15 +185,11 @@ export default class Customer extends React.Component {
 
     render() {
         return (
-            <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+            <div class="flex flex-row min-h-screen bg-white text-gray-800">
                 <Sidebar />
                 <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
                     <Header />
-                    <div class="main-content flex flex-col flex-grow p-4">
-
-                        <h1 class="font-bold text-xl text-black-700">Daftar Customer</h1>
-                        <p class="text-gray-700">For customer Slippy</p>
-
+                    <div class="main-content flex flex-col flex-grow p-4 z-0 pl-96">
                         <div className="flex mt-2 flex-row-reverse mr-4">
                             <div className="flex rounded w-1/2">
                                 <input
@@ -208,7 +203,7 @@ export default class Customer extends React.Component {
                                 <button className="w-1/8 ml-2 px-4 text-white bg-blue-100 border border-1 border-blue-600 rounded hover:bg-blue-200" onClick={this._handleFilter}>
                                     <FontAwesomeIcon icon={faSearch} color="blue" />
                                 </button>
-                                {this.state.role === "admin" &&
+                                {this.state.role === "resepsionis" &&
                                     <button className="w-1/3 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700" onClick={() => this.handleAdd()}>
                                         <FontAwesomeIcon icon={faPlus} size="" /> Add
                                     </button>
@@ -216,7 +211,7 @@ export default class Customer extends React.Component {
                             </div>
                         </div>
 
-                        <div className="flex flex-col mt-2 mr-4">
+                        <div className="flex flex-col mt-8 mr-4">
                             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -225,84 +220,64 @@ export default class Customer extends React.Component {
                                                 <tr>
                                                     <th
                                                         scope="col"
-                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                     >
                                                         No
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                    >
+                                                        Nama Lengkap
+                                                    </th>
+                                                    <th
+                                                        scope="col"
+                                                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                     >
                                                         NIK
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                     >
-                                                        Name
+                                                        Nomor HP
                                                     </th>
                                                     <th
                                                         scope="col"
-                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                    >
-                                                        Address
-                                                    </th>
-                                                    <th
-                                                        scope="col"
-                                                        className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                                                        className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider"
                                                     >
                                                         Email
                                                     </th>
-                                                    {this.state.role === "admin" &&
-                                                        <th
-                                                            scope="col"
-                                                            className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                                                        >
-                                                            Aksi
-                                                        </th>
-                                                    }
+                                                    
                                                 </tr>
                                             </thead>
                                             <tbody className="bg-white divide-y divide-gray-200">
                                                 {this.state.customer.map((item, index) => (
                                                     <tr key={index}>
                                                         <td className="px-6 py-4 whitespace-nowrap">
-                                                            <div className="text-sm text-gray-900">{index + 1}</div>
+                                                            <div className="text-sm text-gray-900 text-center">{index + 1}</div>
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
-                                                            <div className="flex items-center">
-                                                                <div className="text-sm font-medium text-gray-900">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                                <div className="text-sm text-gray-900 ">
+                                                                    {item.nama}
+                                                                </div>
+                                                        </td>
+                                                        <td className="px-6 py-4 whitespace-nowrap text-center">
+                                                                <div className="text-sm text-gray-900">
                                                                     {item.nik}
                                                                 </div>
-                                                            </div>
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
-                                                            <div className="flex items-center">
-                                                                <div className="text-sm font-medium text-gray-900">
-                                                                    {item.customer_name}
-                                                                </div>
-                                                            </div>
-                                                        </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-center">
                                                             <div className="text-sm text-gray-900">
-                                                                {item.address}
+                                                                {item.no_hp}
                                                             </div>
                                                         </td>
-                                                        <td className="px-6 py-4 whitespace-nowrap">
+                                                        <td className="px-6 py-4 whitespace-nowrap text-center">
                                                             <div className="text-sm text-gray-900">
                                                                 {item.email}
                                                             </div>
                                                         </td>
-                                                        {this.state.role === "admin" &&
-                                                            <td className="px-6 py-4 whitespace-nowrap">
-                                                                <button class="bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded mr-2" onClick={() => this.handleEdit(item)}>
-                                                                    <FontAwesomeIcon icon={faPencilSquare} size="lg" />
-                                                                </button>
-                                                                <button class="bg-red-500 hover:bg-red-700 text-white py-1 px-2 rounded" onClick={() => this.handleDrop(item.id_customer)}>
-                                                                    <FontAwesomeIcon icon={faTrash} size="lg" />
-                                                                </button>
-                                                            </td>
-                                                        }
+                                                       
                                                     </tr>
                                                 ))}
                                             </tbody>
@@ -313,9 +288,9 @@ export default class Customer extends React.Component {
                         </div>
 
                     </div>
-                    <footer class="footer px-4 py-2">
+                    <footer class="footer px-4 py-2 mx-auto">
                         <div class="footer-content">
-                            <p class="text-sm text-gray-600 text-center">© Brandname 2023. All rights reserved. <a href="https://twitter.com/iaminos">by Erairris</a></p>
+                            <p class="text-sm text-gray-600 text-center">© Brandname 2023. All rights reserved</p>
                         </div>
                     </footer>
                 </main>
@@ -329,26 +304,26 @@ export default class Customer extends React.Component {
                                 <span class="sr-only">Tutup modal</span>
                             </button>
                             <div class="px-6 py-6 lg:px-8">
-                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-black">Edit Customer</h3>
+                                <h3 class="mb-4 text-xl font-medium text-gray-900 dark:text-black">Add Customer</h3>
                                 <form class="space-y-6" onSubmit={(event) => this.handleSave(event)}>
                                     <div>
-                                        <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">NIK Customer</label>
+                                        <label for="nama" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Nama Lengkap</label>
+                                        <input type="text" name="nama" id="nama" value={this.state.nama} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan nama customer" required />
+                                    </div>
+                                    <div>
+                                        <label for="nik" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">NIK</label>
                                         <input type="text" name="nik" id="nik" value={this.state.nik} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan NIK customer" required />
                                     </div>
                                     <div>
-                                        <label for="customer_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Nama Customer</label>
-                                        <input type="text" name="customer_name" id="customer_name" value={this.state.customer_name} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan nama customer" required />
+                                        <label for="no_hp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Nomor HP</label>
+                                        <input type="text" name="no_hp" id="no_hp" value={this.state.no_hp} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan nomor hp customer" required />
                                     </div>
                                     <div>
-                                        <label for="address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Address Customer</label>
-                                        <input type="text" name="address" id="address" value={this.state.address} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan address customer" required />
-                                    </div>
-                                    <div>
-                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Email Customer</label>
+                                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Email</label>
                                         <input type="email" name="email" id="email" value={this.state.email} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan email customer" required />
                                     </div>
                                     <div>
-                                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Password Customer</label>
+                                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800">Password</label>
                                         <input type="password" name="password" id="password" value={this.state.password} onChange={this.handleChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800" placeholder="Masukkan password customer" required disabled={this.state.action === "update" ? true : false} />
                                     </div>
 
