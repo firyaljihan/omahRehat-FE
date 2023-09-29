@@ -113,33 +113,44 @@ export default class Rooms extends React.Component {
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-4 gap-4 mt-4">
+                    <div class="grid grid-cols-4 gap-4 mt-8">
                         {this.state.typeroom.map((item) => (
                             <div class="col-span-1">
                                 {/* Card untuk type room */}
-                                <div class="CardEvent">
-                                    <div class="max-w-sm rounded overflow-hidden shadow-lg border-2 border-gray-200 bg-gray-100 ">
-                                        <div className='container'>
-                                            <img class="w-full h-48" src={"http://localhost:8080/foto/" + item.foto} />
-                                        </div>
-                                        <div class="px-6 py-4">
-                                            <div class="font-bold text-2xl mb-2">{item.nama_tipe_kamar}</div>
-                                            <div class="font-bold text-xl mb-2 text-blue-600">{item.harga}/night</div>
-                                            <p class="text-gray-700 text-base">
-                                                <LinesEllipsis
-                                                    text={item.deskripsi}
-                                                    maxLine="1"
-                                                    ellipsis="..."
-                                                />
-                                            </p>
-                                        </div>
-                                        <div class="px-6 pt-4 pb-2">
-                                            <button class="mb-2 ml-40 bg-blue-600 hover:bg-blue-700 text-white font-bold p-2 w-1/3 rounded focus:outline-none focus:shadow-outline" type="button" onClick={() => this.handleDetail(item)}>
-                                                Detail
-                                            </button>
-
-                                        </div>
-                                    </div>
+                                <div className="CardEvent">
+                      <div className="max-w-sm h-3/4 mb-8 rounded-lg overflow-hidden shadow-xl border-1 border-black bg-white">
+                        <div className="container">
+                          <img
+                            className="w-full h-48"
+                            src={"http://localhost:8080/foto/" + item.foto}
+                          />
+                        </div>
+                        <div className="px-6 py-4 text-black">
+                          <div className="font-medium text-3xl mb-2">
+                            {item.nama_tipe_kamar}
+                          </div>
+                          <p className="text-black text-light mb-4">
+                            <LinesEllipsis
+                              text={item.deskripsi}
+                              maxLine="1"
+                              ellipsis="..."
+                            />
+                          </p>
+                          <div className="font-bold text-xl mb-2 text-[#212A3E]">
+                            IDR {item.harga}/night
+                          </div>
+                        </div>
+                        <div className="px-6 pb-2">
+                          <button
+                            className="mb-4 bg-[#9BA4B5] hover:bg-[#F1F6F9] text-black font-light  w-1/3 rounded-full focus:outline-none focus:shadow-outline"
+                            type="button"
+                            onClick={() => this.handleDetail(item)}
+                          >
+                            {" "}
+                            Detail
+                          </button>
+                        </div>
+                      </div>
                                 </div>
 
                             </div>

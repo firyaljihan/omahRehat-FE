@@ -197,42 +197,42 @@ export default class User extends React.Component {
 
   render() {
     return (
-      <div class="flex flex-row min-h-screen bg-gray-100 text-gray-800">
+      <div className="flex flex-row min-h-screen bg-white text-black">
         <Sidebar />
-        <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
+        <main className="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
           <Header />
-          <div class="main-content flex flex-col flex-grow p-4 z-0 pl-96">
-            <h1 class="font-bold text-xl text-black-700">Daftar User</h1>
-            <p class="text-gray-700">For admin and Resepsionis</p>
+          <div className="main-content flex flex-col flex-grow p-4 z-0 pl-80">
+            <h1 className="font-bold text-2xl text-black-700 ml-12 mb-4">Daftar User</h1>
 
-            <div className="flex mt-2 flex-row-reverse mr-4">
-              <div className="flex rounded w-1/2">
-                <input
-                  type="text"
-                  className="w-2/3 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                  placeholder="Search..."
-                  name="keyword"
-                  value={this.state.keyword}
-                  onChange={this.handleChange}
-                />
-                <button
-                  className="w-1/8 ml-2 px-4 text-white bg-blue-100 border border-1 border-blue-600 rounded hover:bg-blue-200"
-                  onClick={this._handleFilter}
-                >
-                  <FontAwesomeIcon icon={faSearch} color="blue" />
-                </button>
-                {this.state.role === "admin" && (
+            <div className=" mt-2 mr-4">
+            <div className="flex rounded-full w-1/2 ml-12 mb-4">
+                  <input
+                    type="text"
+                    className="w-3/6 block px-12 py-2 bg-white border rounded-full focus:border-white focus:ring-white focus:outline-none focus:ring focus:ring-opacity-40 relative"
+                    placeholder="Search..."
+                    name="keyword"
+                    value={this.state.keyword}
+                    onChange={this.handleChange}
+                    
+                  />
                   <button
-                    className="w-1/3 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700"
-                    onClick={() => this.handleAdd()}
+                    className="w-1/8 ml-4 py-2 text-black absolute"
+                    onClick={this._handleFilter}
                   >
-                    <FontAwesomeIcon icon={faPlus} size="" /> Add
+                    <FontAwesomeIcon icon={faSearch} color="black" />
                   </button>
-                )}
+                  {this.state.role === "admin" && (
+                    <button
+                      className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
+                      onClick={() => this.handleAdd()}
+                    >
+                      <FontAwesomeIcon icon={faPlus} /> Add
+                    </button>
+                  )}
               </div>
             </div>
 
-            <div className="flex flex-col mt-2 mr-4">
+            <div className="flex flex-col mt-2 mr-4 ml-12">
               <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                   <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
@@ -357,7 +357,7 @@ export default class User extends React.Component {
             <div class="footer-content">
               <p class="text-sm text-gray-600 text-center">
                 © Brandname 2023. All rights reserved.{" "}
-                <a href="https://twitter.com/iaminos">by hantu</a>
+                <a href="https://instagram.com/fjhn.hra">by hantu</a>
               </p>
             </div>
           </footer>

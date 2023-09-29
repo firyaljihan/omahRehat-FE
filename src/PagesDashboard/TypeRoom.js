@@ -234,7 +234,6 @@ export default class TypeRoom extends React.Component {
                     name="keyword"
                     value={this.state.keyword}
                     onChange={this.handleChange}
-                    onKe
                   />
                   <button
                     className="w-1/8 ml-4 py-2 text-black absolute"
@@ -242,14 +241,12 @@ export default class TypeRoom extends React.Component {
                   >
                     <FontAwesomeIcon icon={faSearch} color="black" />
                   </button>
-                  {this.state.role === "admin" && (
-                    <button
-                      className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
-                      onClick={() => this.handleAdd()}
-                    >
-                      <FontAwesomeIcon icon={faPlus} /> Add
-                    </button>
-                  )}
+                  <button
+                    className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
+                    onClick={() => this.handleAdd()}
+                  >
+                    <FontAwesomeIcon icon={faPlus} /> Add
+                  </button>
                 </div>
               </div>
             </div>
@@ -265,8 +262,6 @@ export default class TypeRoom extends React.Component {
                             className="w-full h-48"
                             src={"http://localhost:8080/foto/" + item.foto}
                           />
-                          {this.state.role === "admin" && (
-                            <>
                               <button
                                 className="btn"
                                 onClick={() => this.handleDrop(item.id)}
@@ -287,8 +282,6 @@ export default class TypeRoom extends React.Component {
                                   color="blue"
                                 />
                               </button>
-                            </>
-                          )}
                         </div>
                         <div className="px-6 py-4 text-black">
                           <div className="font-medium text-3xl mb-2">
@@ -310,7 +303,9 @@ export default class TypeRoom extends React.Component {
                             className="mb-4 bg-[#9BA4B5] hover:bg-[#F1F6F9] text-black font-light  w-1/3 rounded-full focus:outline-none focus:shadow-outline"
                             type="button"
                             onClick={() => this.handleDetail(item)}
-                          > Detail
+                          >
+                            {" "}
+                            Detail
                           </button>
                         </div>
                       </div>
@@ -454,7 +449,7 @@ export default class TypeRoom extends React.Component {
         <div
           id="modal_detail"
           tabindex="-1"
-          className="overflow-x-auto fixed top-0 left-0 right-0 z-50 hidden w-full pt-10 pb-10 pl-96 md:inset-0 h-modal md:h-full bg-tranparent bg-black bg-opacity-50"
+          className="overflow-x-auto fixed top-0 left-0 right-0 z-50 hidden w-full pt-4 pl-[600px] md:inset-0 h-modal md:h-full bg-tranparent bg-black bg-opacity-50"
         >
           <div className="relative w-full h-full max-w-lg md:h-auto border-2 border-gray-500 rounded-lg shadow shadow-2xl items-center">
             <div className="relative bg-white rounded-lg">

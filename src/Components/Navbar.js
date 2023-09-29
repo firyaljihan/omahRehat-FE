@@ -61,13 +61,13 @@ export default class Navbar extends Component {
                         }
                     </div>
                     <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-sticky">
-                        <ul class="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white">
+                        <ul class="flex flex-col p-4 mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0">
                             {this.state.isLogin ? (
                                 <>
-                                    <NavLink to="/home" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium" aria-current="page">Home</NavLink>
-                                    <NavLink to="/services" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Services</NavLink>
-                                    <NavLink to="/rooms" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Rooms</NavLink>
-                                    <NavLink to="/mybookings" className="no-underline text-gray-800 hover:bg-blue-500 hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">My Bookings</NavLink>
+                                    <NavLink to="/home" className="no-underline text-gray-800 hover:bg-[#9BA4B5] hover:text-white px-3 py-3 rounded-md text-sm font-medium" aria-current="page">Home</NavLink>
+                                    <NavLink to="/services" className="no-underline text-gray-800 hover:bg-[#9BA4B5] hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Services</NavLink>
+                                    <NavLink to="/rooms" className="no-underline text-gray-800 hover:bg-[#9BA4B5] hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">Rooms</NavLink>
+                                    <NavLink to="/mybookings" className="no-underline text-gray-800 hover:bg-[#9BA4B5] hover:text-white px-3 py-3 rounded-md text-sm font-medium " aria-current="page">My Bookings</NavLink>
                                 </>
                             ) : (
                                 <>

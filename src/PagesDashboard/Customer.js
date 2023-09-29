@@ -189,29 +189,38 @@ export default class Customer extends React.Component {
                 <Sidebar />
                 <main class="main flex flex-col flex-grow -ml-64 md:ml-0 transition-all duration-150 ease-in">
                     <Header />
-                    <div class="main-content flex flex-col flex-grow p-4 z-0 pl-96">
-                        <div className="flex mt-2 flex-row-reverse mr-4">
-                            <div className="flex rounded w-1/2">
-                                <input
-                                    type="text"
-                                    className="w-2/3 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                    placeholder="Search..."
-                                    name="keyword"
-                                    value={this.state.keyword}
-                                    onChange={this.handleChange}
-                                />
-                                <button className="w-1/8 ml-2 px-4 text-white bg-blue-100 border border-1 border-blue-600 rounded hover:bg-blue-200" onClick={this._handleFilter}>
-                                    <FontAwesomeIcon icon={faSearch} color="blue" />
-                                </button>
-                                {this.state.role === "resepsionis" &&
-                                    <button className="w-1/3 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700" onClick={() => this.handleAdd()}>
-                                        <FontAwesomeIcon icon={faPlus} size="" /> Add
-                                    </button>
-                                }
-                            </div>
-                        </div>
+                    <div className="main-content flex flex-col flex-grow p-4 z-0 pl-80">
+            <h1 className="font-bold text-2xl text-black-700 ml-12 mb-4">Daftar Customer</h1>
 
-                        <div className="flex flex-col mt-8 mr-4">
+            <div className=" mt-2 mr-4">
+            <div className="flex rounded-full w-1/2 ml-12 mb-4">
+                  <input
+                    type="text"
+                    className="w-3/6 block px-12 py-2 bg-white border rounded-full focus:border-[#A06823] focus:ring-[#A06823] focus:outline-none focus:ring focus:ring-opacity-40 relative"
+                    placeholder="Search..."
+                    name="keyword"
+                    value={this.state.keyword}
+                    onChange={this.handleChange}
+                    
+                  />
+                  <button
+                    className="w-1/8 ml-4 py-2 text-black absolute"
+                    onClick={this._handleFilter}
+                  >
+                    <FontAwesomeIcon icon={faSearch} color="black" />
+                  </button>
+                  {this.state.role === "resepsionis" && (
+                    <button
+                      className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
+                      onClick={() => this.handleAdd()}
+                    >
+                      <FontAwesomeIcon icon={faPlus} /> Add
+                    </button>
+                  )}
+              </div>
+            </div>
+
+                        <div className="flex flex-col mt-2 mr-4 ml-12">
                             <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                                     <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">

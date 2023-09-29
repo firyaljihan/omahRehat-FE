@@ -116,11 +116,12 @@ export default class Room extends React.Component {
 
     let form = {
       id: this.state.id,
-      nomor_kamar: this.state.nomor_kamar,
-      tipeKamarId: this.state.tipeKamarId,
+      nomor_kamar: +this.state.nomor_kamar,
+      tipeKamarId: +this.state.tipeKamarId,
     };
 
     if (this.state.action === "insert") {
+      console.log("hit")
       let url = "http://localhost:8080/kamar/addKamar";
       axios
         .post(url, form, this.headerConfig())
@@ -130,7 +131,9 @@ export default class Room extends React.Component {
         })
         .catch((error) => {
           console.log("error add data", error.response.status);
-          if (error.response.status === 500) {
+          if (error.response === "Nomor kamar sudah digunakan") {
+            window.alert("The room number already exists");
+          }else{
             window.alert("Failed to add data");
           }
         });
@@ -221,7 +224,7 @@ export default class Room extends React.Component {
             <div className="flex rounded-full w-1/2 ml-12 mb-4">
                   <input
                     type="text"
-                    className="w-3/6 block px-12 py-2 bg-white border rounded-full focus:border-[#A06823] focus:ring-[#A06823] focus:outline-none focus:ring focus:ring-opacity-40 relative"
+                    className="w-3/6 block px-12 py-2 bg-white border focus:border-white focus:ring-white focus:outline-none focus:ring focus:ring-opacity-40 relative"
                     placeholder="Search..."
                     name="keyword"
                     value={this.state.keyword}
@@ -236,7 +239,7 @@ export default class Room extends React.Component {
                   </button>
                   {this.state.role === "admin" && (
                     <button
-                      className="w-1/5 ml-2 px-4 text-white bg-[#A06823] rounded hover:bg-[#BC9565]"
+                      className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
                       onClick={() => this.handleAdd()}
                     >
                       <FontAwesomeIcon icon={faPlus} /> Add
@@ -385,7 +388,6 @@ export default class Room extends React.Component {
                     <input
                       type="text"
                       name="nomor_kamar"
-                      id="nomor_kamar"
                       value={this.state.nomor_kamar}
                       onChange={this.handleChange}
                       className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800"

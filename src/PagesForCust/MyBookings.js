@@ -28,7 +28,7 @@ const PrintElement = (props) => {
                         <p><span className="font-semibold">Date: </span> {moment(Date.now()).format('DD-MM-YYYY')}</p>
                         <p><span className="font-semibold">Invoice:</span> </p>
                         <span className="mt-1 px-3 py-2 inline-flex text-xl leading-5 font-semibold rounded bg-blue-100 text-blue-800">
-                            BOOK - {item.booking_number}
+                            BOOK - {item.nomor_pemesanan}
                         </span>
                     </div>
                 </div>
@@ -45,11 +45,11 @@ const PrintElement = (props) => {
                     </thead>
                     <tbody>
                         <tr>
-                            <td className="p-4 text-left">{item.room_type.name_room_type}</td>
-                            <td className="p-4 text-center">{item.total_room}</td>
-                            <td className="p-4 text-left">{moment(item.check_in_date).format('DD-MM-YYYY')}</td>
-                            <td className="p-4 text-left">{moment(item.check_out_date).format('DD-MM-YYYY')}</td>
-                            <td className="p-4 text-left">{item.room_type.price}</td>
+                            <td className="p-4 text-left">{item.tipe_kamar.nama_tipe_kamar}</td>
+                            <td className="p-4 text-center">{item.jumlah_kamar}</td>
+                            <td className="p-4 text-left">{moment(item.tgl_check_in).format('DD-MM-YYYY')}</td>
+                            <td className="p-4 text-left">{moment(item.tgl_check_out).format('DD-MM-YYYY')}</td>
+                            <td className="p-4 text-left">{item.tipe_kamar.harga}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -63,6 +63,7 @@ export default class MyBookings extends React.Component {
         super()
         this.state = {
             pemesanan: [],
+            booking: [],
             id: "",
             id_user: "",
             id_customer: "",
@@ -89,7 +90,7 @@ export default class MyBookings extends React.Component {
         this.state.id_customer = localStorage.getItem("id")
         if (localStorage.getItem("token")) {
             if (
-                localStorage.getItem("role") === "customer"
+                localStorage.getItem("role") == "customer"
             ) {
                 this.state.token = localStorage.getItem("token");
                 this.state.role = localStorage.getItem("role");
@@ -114,7 +115,8 @@ export default class MyBookings extends React.Component {
     }
 
     getBookingByCust = () => {
-        let url = "http://localhost:8080/pemesanan/customer/" + this.state.id_customer
+        const email = localStorage.getItem("email")
+        let url = "http://localhost:8080/pemesanan/getAll/" + email
         axios.get(url, this.headerConfig())
             .then(response => {
                 this.setState({
@@ -269,7 +271,7 @@ export default class MyBookings extends React.Component {
                                         </tr>
                                     </thead>
                                     <tbody className="bg-white divide-y divide-gray-200">
-                                        {this.state.pemesanan.map((item, index) => {
+                                        {this.state.booking.map((item, index) => {
                                             return (
                                                 <tr key={index}>
                                                     <td className="px-6 py-4 whitespace-nowrap">
@@ -288,7 +290,7 @@ export default class MyBookings extends React.Component {
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">
                                                         <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                                            {item.tipe_kamar.nama_tipe_kamar}
+                                                            {item.tipe_kamar?.nama_tipe_kamar}
                                                         </span>
                                                     </td>
                                                     <td className="px-6 py-4 whitespace-nowrap">

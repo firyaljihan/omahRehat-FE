@@ -32,7 +32,7 @@ export default class Login extends React.Component {
                 if (response.status === 200) {
                     let id = response.data.data.id
                     let token = response.data.data.token
-                    let role = response.data.data.role
+                    let role = "customer"
                     let email = response.data.data.email
                     localStorage.setItem("id", id)
                     localStorage.setItem("token", token)

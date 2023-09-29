@@ -30,7 +30,7 @@ export default class Login extends React.Component {
             .then(response => {
                 this.setState({ logged: response.data.data.logged })
                 if (response.status === 200) {
-                    let id = response.data.data.id_user
+                    let id = response.data.data.id
                     let token = response.data.data.token
                     let role = response.data.data.role
                     let email = response.data.data.email
@@ -59,7 +59,7 @@ export default class Login extends React.Component {
     render() {
         return (
             <div className="dashboard1 relative">
-                <div class="login-container absolute bg-[#394867] bg-opacity-20 shadow-md top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-3xl p-10 max-w-sm w-full">
+                <div class="login-container absolute bg-white bg-opacity-50 shadow-md top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-lg p-10 max-w-sm w-full">
                         <form  onSubmit={(e) => this.handleLogin(e)}>
                             <p class="text-black text-2xl font-bold text-center">LOGIN</p>
                             <p class="text-black text-lg font-light mb-8 text-center">Enter your details to get sign into your account</p>
@@ -83,7 +83,7 @@ export default class Login extends React.Component {
                         </form>
                     </div>
                     <div class="w-full bg-gray-500 bg-fixed text-center">
-                        <img src="/assets/login.png" className="w-screen h-screen" alt="" />
+                        <img src="/assets/log.png" className="w-screen h-screen" alt="" />
                     </div>
                 </div>
             

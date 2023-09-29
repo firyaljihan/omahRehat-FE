@@ -11,15 +11,15 @@ export default class StrukBooking extends React.Component {
 
                     <div className="invoice-details">
                         <div>
-                            <p><span className="font-semibold">Hotel Name:</span> Slippy</p>
+                            <p><span className="font-semibold">Hotel Name:</span> OmahRehat</p>
                             <p><span className="font-semibold mt-2">Address:</span> Malang</p>
-                            <p><span className="font-semibold mt-2">Phone:</span> 0331-1234</p>
+                            <p><span className="font-semibold mt-2">Phone:</span> 0312-1234</p>
                         </div>
                         <div>
-                            <p><span className="font-semibold">Date:</span> 12-03-2023</p>
+                            <p><span className="font-semibold">Date:</span> {Date.now()}</p>
                             <p><span className="font-semibold">Invoice:</span> </p>
                             <span className="mt-1 px-3 py-2 inline-flex text-xl leading-5 font-semibold rounded bg-blue-100 text-blue-800">
-                                BOOK - 63749
+                                BOOK - 65342
                             </span>
                         </div>
                     </div>
