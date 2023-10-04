@@ -27,6 +27,7 @@ export default class TypeRoom extends React.Component {
       token: "",
       action: "",
       keyword: "",
+      search: ""
     };
     this._handleKeyPress = this._handleKeyPress.bind(this);
 
@@ -131,7 +132,6 @@ export default class TypeRoom extends React.Component {
           this.handleClose();
         })
         .catch((error) => {
-          console.log("error add data", error.response.status);
           if (error.response.status === 500) {
             window.alert("Failed to add data");
           }
@@ -152,21 +152,25 @@ export default class TypeRoom extends React.Component {
   };
 
   handleDrop = (id) => {
-    let url = "http://localhost:8080/tipeKamar/deleteTipeKamar/" + id;
-    if (window.confirm("Are tou sure to delete this type room ? ")) {
-      axios
-        .delete(url, this.headerConfig())
-        .then((response) => {
-          console.log(response.data.message);
-          this.getTypeRoom();
-        })
-        .catch((error) => {
-          if (error.response.status === 500) {
-            window.alert("You can't delete this data");
-          }
-        });
+    // Delete data
+    let url = "http://localhost:8080/tipekamar/deleteTipeKamar/" + id;
+    if (window.confirm("Are you sure to delete this type of room?")) {
+        axios
+            .delete(url, this.headerConfig())
+            .then(response => {
+                console.log(response.data.message);
+                // Show a success message (you can customize this part)
+                window.alert("Data deleted successfully.");
+                // Reload the page
+                window.location.reload();
+            })
+            .catch(error => {
+                if (error.response.status === 500) {
+                    window.alert("You can't delete this data");
+                }
+            });
     }
-  };
+}
 
   _handleFilter = () => {
     let data = {
@@ -234,6 +238,7 @@ export default class TypeRoom extends React.Component {
                     name="keyword"
                     value={this.state.keyword}
                     onChange={this.handleChange}
+                    onKeyUp={this._handleFilter}
                   />
                   <button
                     className="w-1/8 ml-4 py-2 text-black absolute"
@@ -241,12 +246,14 @@ export default class TypeRoom extends React.Component {
                   >
                     <FontAwesomeIcon icon={faSearch} color="black" />
                   </button>
-                  <button
-                    className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
-                    onClick={() => this.handleAdd()}
-                  >
-                    <FontAwesomeIcon icon={faPlus} /> Add
-                  </button>
+                  {this.state.role === "admin" && (
+                    <button
+                      className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
+                      onClick={() => this.handleAdd()}
+                    >
+                      <FontAwesomeIcon icon={faPlus} /> Add
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -261,7 +268,8 @@ export default class TypeRoom extends React.Component {
                           <img
                             className="w-full h-48"
                             src={"http://localhost:8080/foto/" + item.foto}
-                          />
+                          />{this.state.role === "admin" && (
+                            <td className="px-6 py-4 whitespace-nowrap">
                               <button
                                 className="btn"
                                 onClick={() => this.handleDrop(item.id)}
@@ -282,6 +290,8 @@ export default class TypeRoom extends React.Component {
                                   color="blue"
                                 />
                               </button>
+                            </td>
+                          )}
                         </div>
                         <div className="px-6 py-4 text-black">
                           <div className="font-medium text-3xl mb-2">

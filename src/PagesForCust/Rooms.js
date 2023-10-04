@@ -95,21 +95,24 @@ export default class Rooms extends React.Component {
             <div>
                 <Navbar />
                 <div className="m-6 pl-6 ">
-                    <p className="text-xl font-semibold text-blue-600">Beautiful Room </p>
-                    <p className="text-5xl font-bold mt-2">Best Room For You</p>
+                    <p className="text-5xl font-bold mt-14">Best Room For You</p>
                     <div className="flex mt-6">
                         <div className="flex rounded w-1/2">
-                            <input
-                                type="text"
-                                className="w-5/6 block w-full px-4 py-2 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                                placeholder="Search..."
-                                name="keyword"
-                                value={this.state.keyword}
-                                onChange={this.handleChange}
-                            />
-                            <button className="w-1/6 ml-2 px-4 text-white bg-blue-600 rounded hover:bg-blue-700" onClick={this._handleFilter}>
-                                <FontAwesomeIcon icon={faSearch} size="" />
-                            </button>
+                        <input
+                    type="text"
+                    className="w-5/6 block px-12 py-2 bg-white border rounded-full focus:border-white focus:ring-white focus:outline-none focus:ring focus:ring-opacity-40 relative"
+                    placeholder="Search..."
+                    name="keyword"
+                    value={this.state.keyword}
+                    onChange={this.handleChange}
+                    onKeyUp={this._handleFilter}
+                  />
+                  <button
+                    className="w-1/8 ml-4 py-2 text-black absolute"
+                    onClick={this._handleFilter}
+                  >
+                    <FontAwesomeIcon icon={faSearch} color="black" />
+                  </button>
                         </div>
                     </div>
 
@@ -184,7 +187,7 @@ export default class Rooms extends React.Component {
                                     <div class="font-bold text-2xl mb-2">{this.state.nama_tipe_kamar}</div>
                                     <div class="font-bold text-xl mb-2 text-blue-600">{this.state.harga}/night</div>
                                     <p class="text-black-700 text-base">
-                                        {this.state.description}
+                                        {this.state.deskripsi}
                                     </p>
                                 </div>
 

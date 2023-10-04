@@ -56,8 +56,8 @@ export default class Customer extends React.Component {
         let data = {
             keyword: this.state.keyword,
         }
-        let url = "http://localhost:8080/customer/find/filter"
-        axios.post(url, data)
+        let url = "http://localhost:8080/customer/findCust"
+        axios.post(url, data, this.headerConfig())
             .then(response => {
                 if (response.status === 200) {
                     this.setState({
@@ -201,7 +201,7 @@ export default class Customer extends React.Component {
                     name="keyword"
                     value={this.state.keyword}
                     onChange={this.handleChange}
-                    
+                    onKeyUp={this._handleFilter}
                   />
                   <button
                     className="w-1/8 ml-4 py-2 text-black absolute"

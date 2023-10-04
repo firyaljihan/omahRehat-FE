@@ -158,7 +158,8 @@ export default class Room extends React.Component {
         .delete(url, this.headerConfig())
         .then((response) => {
           console.log(response.data.message);
-          this.getTypeRoom();
+          this.getRoom();
+          // window.location.href = '/room'
         })
         .catch((error) => {
           if (error.response.status === 500) {
@@ -229,7 +230,7 @@ export default class Room extends React.Component {
                     name="keyword"
                     value={this.state.keyword}
                     onChange={this.handleChange}
-                    
+                    onKeyUp={this._handleFilter}
                   />
                   <button
                     className="w-1/8 ml-4 py-2 text-black absolute"

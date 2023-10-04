@@ -22,17 +22,19 @@ export default class Sidebar extends React.Component {
     this.state.nama_user = localStorage.getItem("nama_user");
   }
 
-  logOut = () => {
-    if (window.confirm("Are you sure to logout")) {
+  logout = () => {
+    if (window.confirm("Are you sure to logout?")) {
       window.location = "/";
-      localStorage.clear();
-      localStorage.removeItem("id");
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("email");
-      localStorage.removeItem("username");
+        localStorage.clear()
+        localStorage.removeItem("id")
+        localStorage.removeItem("token")
+        localStorage.removeItem("role")
+        localStorage.removeItem("email")
+        this.setState({
+            isLogin: false
+        })
     }
-  };
+}
 
   checkRole = () => {
     if (this.state.role !== "admin" && this.state.role !== "resepsionis") {
@@ -52,12 +54,6 @@ export default class Sidebar extends React.Component {
         <div class="sidebar-header flex items-center justify-center py-4">
           <div class="inline-flex">
             <a href="#" class="inline-flex flex-row items-center">
-              {/* <img
-                src="/assets/logo.png"
-                class="w-12 h-12 text-red-400"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              /> */}
               <span class="leading-10 text-white text-2xl font-bold ml-1 ">
                 OmahRehat
               </span>
@@ -150,10 +146,10 @@ export default class Sidebar extends React.Component {
                 <span class="ml-3">History Transaksi</span>
               </a>
             </li>
-            <li class="my-px" onClick={() => this.logOut()}>
-              <a
-                href="/"
-                class="flex flex-row items-center h-10 px-3 rounded-lg text-white hover:bg-gray-200 hover:text-black font-base"
+            <li class="my-px">
+              <button
+                onClick={() => this.logout()}
+                class="flex flex-row items-center h-10 px-3 pr-40 rounded-lg text-white hover:bg-gray-200 hover:text-black font-base"
               >
                 <span class="mr-3 flex items-center justify-center text-lg text-white">
                   <svg
@@ -168,10 +164,10 @@ export default class Sidebar extends React.Component {
                     <path d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z" />
                   </svg>
                 </span>
-                <span class="ml-2" onClick={() => this.logOut()}>
+                <span class="ml-2">
                   Logout
                 </span>
-              </a>
+              </button>
             </li>
           </ul>
         </div>

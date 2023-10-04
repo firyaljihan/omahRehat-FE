@@ -66,25 +66,25 @@ export default class User extends React.Component {
 
   _handleFilter = () => {
     let data = {
-      keyword: this.state.keyword,
-    };
-    let url = "http://localhost:8080/user/findUser";
-    axios
-      .post(url, data)
-      .then((response) => {
-        if (response.status === 200) {
-          this.setState({
-            user: response.data.data,
-          });
-        } else {
-          alert(response.data.message);
-          this.setState({ message: response.data.message });
-        }
-      })
-      .catch((error) => {
-        console.log("error", error.response.status);
-      });
-  };
+        keyword: this.state.keyword,
+    }
+    let url = "http://localhost:8080/user/findUser"
+    axios.post(url, data, this.headerConfig())
+        .then(response => {
+            if (response.status === 200) {
+                this.setState({
+                    user: response.data.data
+                })
+            } else {
+                alert(response.data.message)
+                this.setState({ message: response.data.message })
+
+            }
+        })
+        .catch(error => {
+            console.log("error", error.response.status)
+        })
+}
 
   handleAdd = () => {
     $("#modal_user").show();
@@ -213,7 +213,7 @@ export default class User extends React.Component {
                     name="keyword"
                     value={this.state.keyword}
                     onChange={this.handleChange}
-                    
+                    onKeyUp={this._handleFilter}
                   />
                   <button
                     className="w-1/8 ml-4 py-2 text-black absolute"
@@ -221,14 +221,14 @@ export default class User extends React.Component {
                   >
                     <FontAwesomeIcon icon={faSearch} color="black" />
                   </button>
-                  {this.state.role === "admin" && (
+                  {localStorage.getItem("role") === "admin"  ? (
                     <button
                       className="w-1/5 ml-2 px-4 text-white bg-[#212A3E] rounded hover:bg-[#9BA4B5]"
                       onClick={() => this.handleAdd()}
                     >
                       <FontAwesomeIcon icon={faPlus} /> Add
                     </button>
-                  )}
+                  ):null}
               </div>
             </div>
 
@@ -269,14 +269,14 @@ export default class User extends React.Component {
                           >
                             Role
                           </th>
-                          {this.state.role === "admin" && (
+                          {localStorage.getItem("role") === "admin"  ? (
                             <th
                               scope="col"
                               className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                             >
                               Aksi
                             </th>
-                          )}
+                          ):null}
                         </tr>
                       </thead>
                       <tbody className="bg-white divide-y divide-gray-200">
@@ -323,7 +323,7 @@ export default class User extends React.Component {
                                   </span>
                                 )}
                               </td>
-                              {this.state.role === "admin" && (
+                              {localStorage.getItem("role") === "admin"  ? (
                                 <td className="px-6 py-4 whitespace-nowrap">
                                   <button
                                     class="bg-green-600 hover:bg-green-700 text-white py-1 px-2 rounded mr-2"
@@ -341,7 +341,7 @@ export default class User extends React.Component {
                                     <FontAwesomeIcon icon={faTrash} size="lg" />
                                   </button>
                                 </td>
-                              )}
+                              ):null}
                             </tr>
                           );
                         })}
@@ -452,7 +452,7 @@ export default class User extends React.Component {
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800"
                       placeholder="Masukkan email user"
                       required
-                      disabled={this.state.action === "update" ? true : false}
+                      disabled={this.state.action === "update"}
                     />
                   </div>
                   <div>

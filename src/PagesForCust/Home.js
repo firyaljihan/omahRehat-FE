@@ -12,24 +12,25 @@ export default class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      id_room_type: "",
+      tipe: [],
+      kamar: [],
+      booking: [],
+      tipe_kamar: [],
+      user: [],
+      type: "",
       nama_tipe_kamar: "",
       harga: "",
       deskripsi: "",
       foto: "",
-      kamar: [],
-      booking: [],
-      id_booking: "",
-      id_user: "",
-      id_customer: "",
+      nama_user: "",
       nomor_pemesanan: "",
       tgl_pemesanan: "",
       tgl_check_in: "",
       tgl_check_out: "",
       nama_pemesan: "",
+      nama_tamu: "",
+      email_pemesan: "",
       jumlah_kamar: "",
-      tipe_kamar: [],
-      user: [],
       role: "",
       token: "",
       action: "",
@@ -38,6 +39,7 @@ export default class Home extends React.Component {
 
     this.state.id_customer = localStorage.getItem("id");
     this.state.token = localStorage.getItem("token");
+    this.state.nama_user = localStorage.getItem("nama");
   }
 
   headerConfig = () => {
@@ -48,6 +50,7 @@ export default class Home extends React.Component {
   };
 
   handleChange = (e) => {
+    console.log("Selected value:", e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     });
@@ -75,36 +78,42 @@ export default class Home extends React.Component {
   showModal = () => {
     $("#modal_booking").show();
     this.setState({
-      id_user: "",
-      id_customer: this.state.id,
-      id_room_type: "",
-      nomor_pemesanan: Math.floor(Math.random() * 90000) + 10000,
-      tgl_pemesanan: moment().format("YYYY-MM-DD"),
+      nomor_pemesanan: "",
+      nama_pemesan: "",
+      email_pemesan: "",
+      nama_user: "",
+      tipe_kamar: "",
       tgl_check_in: "",
       tgl_check_out: "",
-      nama_pemesan: "",
-      jumlah_kamar: "",
+      nama_tamu: "",
+      jumlah_kamar: 1,
       action: "insert",
+      nomor_pemesanan: Math.floor(Math.random() * 90000) + 10000,
+      // tgl_pemesanan: moment().format("YYYY-MM-DD"),
     });
   };
-  handleAddBooking = () => {
+  handleAddBooking = (e) => {
+    e.preventDefault();
     let form = {
-      id_user: this.state.id,
-      id_customer: this.state.id,
-      id_room_type: this.state.id,
-      nomor_pemesanan: this.state.nomor_pemesanan,
-      tgl_pemesanan: this.state.tgl_pemesanan,
+      nama_pemesan: localStorage.getItem("nama"),
+      email_pemesan: localStorage.getItem("email"),
+      nama_user: localStorage.getItem("nama"),
+      tipe_kamar: this.state.type,
       tgl_check_in: this.state.tgl_check_in,
       tgl_check_out: this.state.tgl_check_out,
-      nama_pemesan: this.state.nama_pemesan,
+      nama_tamu: this.state.nama_tamu,
       jumlah_kamar: this.state.jumlah_kamar,
+      nomor_pemesanan: this.state.nomor_pemesanan,
+      // tgl_pemesanan: this.state.tgl_pemesanan,
     };
+    console.log(form)
     let url = "http://localhost:8080/pemesanan/addPemesanan";
     axios
       .post(url, form, this.headerConfig())
       .then((response) => {
-        this.getBooking();
-        this.handleClose();
+        window.alert("Succes transaction");
+        // this.getBooking();
+        // this.handleClose();
         window.location = "/mybookings";
       })
       .catch((error) => {
@@ -115,8 +124,8 @@ export default class Home extends React.Component {
       });
   };
 
-  handleFilter = (e) => {
-    e.preventDefault();
+  handleFilter = () => {
+    
     let data = {
       tgl_check_in: this.state.tgl_check_in,
       tgl_check_out: this.state.tgl_check_out,
@@ -128,7 +137,7 @@ export default class Home extends React.Component {
       .then((response) => {
         if (response.status === 200) {
           this.setState({
-            kamar: response.data.data,
+            tipe: response.data.data,
           });
         } else {
           alert(response.data.message);
@@ -138,6 +147,19 @@ export default class Home extends React.Component {
       .catch((error) => {
         console.log("error", error.response.status);
       });
+  };
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const { tgl_check_in, tgl_check_out } = this.state; // Mengambil nilai dari state
+
+    let form = new FormData();
+    form.append("tgl_check_in", tgl_check_in);
+    form.append("tgl_check_out", tgl_check_out);
+
+    // Simpan tgl_check_in dan tgl_check_out ke dalam localStorage
+    localStorage.setItem("tgl_check_in", tgl_check_in);
+    localStorage.setItem("tgl_check_out", tgl_check_out);
   };
 
   getBooking = () => {
@@ -161,7 +183,7 @@ export default class Home extends React.Component {
       .get(url)
       .then((response) => {
         this.setState({
-          tipe_kamar: response.data.data,
+          tipe: response.data.data,
         });
         console.log(response.data.data);
       })
@@ -204,11 +226,9 @@ export default class Home extends React.Component {
   render() {
     return (
       <div>
-        <div
-          name="home"
-          className="relative bg-gray-50 flex flex-col justify-between pb-44"
-        >
+        <div name="home" className="relative bg-gray-50 flex flex-col justify-between pb-44">
           <Navbar />
+          <section class="bg-white pt-10 pb-28">
           <div className="grid md:grid-cols-2 max-w-[1240px] m-auto mt-20">
             <div>
               <img
@@ -250,8 +270,8 @@ export default class Home extends React.Component {
 
           <div class="flex flex-col mr-19 ml-40 mb-8">
             <div class="ml-48 w-3/5 bg-white-200 border-2 border-grey rounded-lg shadow h-auto">
-              <form onSubmit={this.handleFilter}>
-                <div class="flex flex-row">
+              <form onSubmit={this.handleSubmit}>
+                <div class="flex flex-row ml-32">
                   <div className="pr-10 pl-10 pt-5 pb-6">
                     <div class="flex items-center">
                       <div className="mr-3 bg-[#9BA4B5] p-4 rounded-md h-auto">
@@ -274,7 +294,7 @@ export default class Home extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-10 pl-4 pt-5 pb-6">
+                  <div className="pr-10 pl-4 pt-5 pb-6 ml-16">
                     <div class="flex items-center">
                       <div className="mr-3 bg-[#9BA4B5] p-4 rounded-md h-auto">
                         <FontAwesomeIcon
@@ -296,25 +316,24 @@ export default class Home extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <div className="pr-2 pl-2 pt-9 pb-6">
-                    <button className="bg-[#394867] hover:bg-[#9BA4B5] text-white font-semibold p-2 pr-3 pl-3 w-full rounded focus:outline-none focus:shadow-outline">
-                      Check Rooms
-                    </button>
-                  </div>
                 </div>
               </form>
             </div>
           </div>
+          </section>
 
           {/* ini buat available room */}
-          {this.state.kamar ? (
+          {this.state.tipe?.length > 0 && (
+                    <section >
             <div className="m-6 pl-24">
               <p className="text-5xl font-bold mt-2">
                 <span className="text-blue-600">Available</span> Room{" "}
               </p>
 
               <div class="grid grid-cols-3 mt-8">
-                {this.state.kamar.map((item, index) => (
+              {(this.state.tgl_check_out == "") && (this.state.tgl_check_out == "") ?
+                  ""
+                : this.state.tipe?.map((item, index) => (
                   <div class="col-span-1">
                     {/* Card untuk type room */}
                     <div className="CardEvent" key={index}>
@@ -340,7 +359,7 @@ export default class Home extends React.Component {
                             IDR {item.harga}/night
                           </div>
                         </div>
-                        <div className="px-6 pb-2">
+                        <div className="flex px-6 pb-2">
                           <button
                             className="mb-4 bg-[#9BA4B5] hover:bg-[#F1F6F9] text-black font-light  w-1/3 rounded-full focus:outline-none focus:shadow-outline"
                             type="button"
@@ -353,13 +372,12 @@ export default class Home extends React.Component {
                       </div>
                     </div>
                   </div>
-                ))}
+                )) }                
               </div>
-            </div>
-          ) : (
-            <h2>Loading....</h2>
-          )}
-        </div>
+              </div>
+              </section>
+                )}
+            
 
         {/* modal detail room */}
         <div
@@ -458,18 +476,18 @@ export default class Home extends React.Component {
                   >
                     <div>
                       <label
-                        for="nama_pemesan"
+                        for="nama_tamu"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800"
                       >
                         Guest Name
                       </label>
                       <input
                         type="text"
-                        name="nama_pemesan"
-                        id="nama_pemesan"
+                        name="nama_tamu"
+                        id="nama_tamu"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800"
                         placeholder="Name for guest"
-                        value={this.state.nama_pemesan}
+                        value={this.state.nama_tamu}
                         onChange={this.handleChange}
                         required
                       />
@@ -489,51 +507,36 @@ export default class Home extends React.Component {
                         placeholder="Total room your booked"
                         value={this.state.jumlah_kamar}
                         onChange={this.handleChange}
+                        min="1"
                         required
                       />
                     </div>
                     <div>
                       <label
-                        for="id"
+                        for="type"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800"
                       >
                         Room Type
                       </label>
+
                       <select
                         className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
                         placeholder="Jenis Room Type"
-                        name="id"
-                        value={this.state.id}
+                        name="type"
+                        value={this.state.type}
                         onChange={this.handleChange}
                         required
                       >
                         <option value="">Choose Room Type</option>
-                        {this.state.tipe_kamar.map((item, index) => (
-                          <option value={item.id}>
-                            {item.nama_tipe_kamar}
-                          </option>
-                        ))}
+                        {this.state.tipe &&
+                          this.state.tipe.map((item, index) => (
+                            <option key={index} value={item.nama_tipe_kamar}>
+                              {item.nama_tipe_kamar}
+                            </option>
+                          ))}
                       </select>
                     </div>
-                    <div>
-                      <label
-                        for="tgl_pemesanan"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800"
-                      >
-                        Booking Date
-                      </label>
-                      <input
-                        type="text"
-                        name="tgl_pemesanan"
-                        id="tgl_pemesanan"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-gray-800"
-                        placeholder="Booking Date"
-                        value={moment().format("YYYY-MM-DD")}
-                        onChange={this.handleChange}
-                        required
-                        disabled
-                      />
-                    </div>
+
                     <div>
                       <label
                         for="tgl_check_in"
@@ -570,27 +573,7 @@ export default class Home extends React.Component {
                         required
                       />
                     </div>
-                    <div>
-                      <label
-                        for="id"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-800"
-                      >
-                        Resepsionis
-                      </label>
-                      <select
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-gray-800 block w-full p-2.5 dark:bg-white dark:border-gray-500 dark:placeholder-gray-400 dark:text-black"
-                        placeholder="Jenis Room Type"
-                        name="id"
-                        value={this.state.id}
-                        onChange={this.handleChange}
-                        required
-                      >
-                        <option value="">Confirm your booking with</option>
-                        {this.state.user.map((item, index) => (
-                          <option value={item.id}>{item.nama_user}</option>
-                        ))}
-                      </select>
-                    </div>
+
                     <button
                       type="submit"
                       class="w-full text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2"
@@ -604,6 +587,7 @@ export default class Home extends React.Component {
           </div>
         </div>
       </div>
+      </div>
     );
+    }
   }
-}

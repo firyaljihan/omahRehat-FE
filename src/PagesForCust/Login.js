@@ -34,10 +34,12 @@ export default class Login extends React.Component {
                     let token = response.data.data.token
                     let role = "customer"
                     let email = response.data.data.email
+                    let nama = response.data.data.nama
                     localStorage.setItem("id", id)
                     localStorage.setItem("token", token)
                     localStorage.setItem("role", role)
                     localStorage.setItem("email", email)
+                    localStorage.setItem("nama", nama)
                     alert("Success Login")
                     window.location.href = "/home"
                 } else {
